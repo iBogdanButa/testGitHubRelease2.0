@@ -8,7 +8,7 @@ if [[ ! $branch_name =~ ^VERSION-[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
 fi
 
 # Get the latest tag that matches the pattern X.Y.Z-rcN
-last_tag=$(git describe --abbrev=0 --tags --match "[0-9]*.[0-9]*.[0-9]*-rc[0-9]*")
+last_tag=$(git describe --abbrev=0 --tags --match "[0-9]*.[0-9]*.[0-9]*-rc[0-9]*" 2>/dev/null)
 
 # Get the current version number and release candidate number
 if [[ -n $last_tag ]]; then
@@ -23,10 +23,11 @@ fi
 
 # Create the new tag
 new_tag="${version}-rc${rc_num}"
-git tag $new_tag
 
 # Update the Maven version in the maven.config file
 sed -i "s/-Drevision=.*/-Drevision=$new_tag/" .mvn/maven.config
 
-
+git add .mvn/maven.config
+git commit -m "maven.config version automatic update"
+git tag $new_tag
 #git push --tags
