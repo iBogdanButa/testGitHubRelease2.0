@@ -27,9 +27,4 @@ new_tag="${version}-rc${rc_num}"
 # Update the Maven version in the maven.config file
 sed -i "s/-Drevision=.*/-Drevision=$new_tag/" .mvn/maven.config
 
-git add .mvn/maven.config
-git commit -m "maven.config version automatic update"
 git tag $new_tag
-
-git push --tags
-git push origin $branch_name

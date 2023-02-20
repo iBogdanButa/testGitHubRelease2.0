@@ -1,0 +1,23 @@
+name: Release Candidate
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release-candidate:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Install Git
+      run: sudo apt-get update && sudo apt-get install -y git
+    - name: Install Maven
+      uses: actions/setup-java@v2
+      with:
+        java-version: '8'
+    - name: Run Release Candidate script
+      run: |
+        bash ci/release-candidate.sh
+        git diff --exit-code --quiet maven.config || git commit -m "Update Maven version" maven.config
+        git push
+        git push --tags
