@@ -1,0 +1,20 @@
+name: Create Release Candidate Branch
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-release-candidate-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Create release candidate branch
+      run: |
+        # Replace with your own branch name format
+        RELEASE_BRANCH_NAME="release-candidate-$(date +%Y%m%d%H%M%S)"
+        #git checkout -b $RELEASE_BRANCH_NAME
+        #git push -u origin $RELEASE_BRANCH_NAME
+        echo "Created release candidate branch $RELEASE_BRANCH_NAME" >> log.txt
