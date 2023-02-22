@@ -1,4 +1,4 @@
-name: Prepare Minor Release Candidate
+name: Release Version
 
 on:
   workflow_dispatch:
@@ -13,4 +13,4 @@ jobs:
 
     - name: Create release candidate branch
       run: |
-        echo "Preparation started for a minor release"
+        echo "Release version"

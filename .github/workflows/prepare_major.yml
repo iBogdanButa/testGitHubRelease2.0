@@ -13,4 +13,4 @@ jobs:
 
     - name: Create release candidate branch
       run: |
-        echo "Preparation started for a major releases"
+        echo "Preparation started for a major release"
