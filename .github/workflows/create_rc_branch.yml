@@ -17,4 +17,4 @@ jobs:
         RELEASE_BRANCH_NAME="release-candidate-$(date +%Y%m%d%H%M%S)"
         #git checkout -b $RELEASE_BRANCH_NAME
         #git push -u origin $RELEASE_BRANCH_NAME
-        echo "Created release candidate branch $RELEASE_BRANCH_NAME" >> log.txt
+        echo "Created release candidate branch $RELEASE_BRANCH_NAME"
