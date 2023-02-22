@@ -13,8 +13,11 @@ jobs:
 
     - name: Create release candidate branch
       run: |
+        #Get latest tag
+        last_tag=$(git describe --tags --abbrev=0 --tags --match "[0-9]*.[0-9]*.[0-9]*") 
+        
         # Replace with your own branch name format
-        RELEASE_BRANCH_NAME="release-candidate-$(date +%Y%m%d%H%M%S)"
+        #RELEASE_BRANCH_NAME="release-candidate-$(date +%Y%m%d%H%M%S)"
         #git checkout -b $RELEASE_BRANCH_NAME
         #git push -u origin $RELEASE_BRANCH_NAME
-        echo "Created release candidate branch $RELEASE_BRANCH_NAME"
+        echo "Created release candidate branch $last_tag"
