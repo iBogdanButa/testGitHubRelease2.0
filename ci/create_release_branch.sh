@@ -40,16 +40,17 @@ else
     exit 1
 fi
 
-if [ "$release_type" == "major" ]]; then
+if [[ "$release_type" == "major" ]]; then
 	((major++))
 	minor=0
 	patch=0
-elif [ "$release_type" == "minor" ]]; then
+elif [[ "$release_type" == "minor" ]]; then
 	((minor++))
 	patch=0	
 else 
 	#patch release, will use the tag on the the master
 	#nothing to do here for now	
+	echo "New patch, will user version on master branch"
 fi
 
 echo "New $release_type release version base will be ${major}.${minor}.${patch}"
@@ -95,6 +96,7 @@ git tag "$future_rc_version$future_rc_qualifier"
 
 # push the new tags and branch to remote
 git push --set-upstream origin "$branch"
+git push --tags
 
 # back to master branch to continue the job.
 git checkout master
@@ -106,5 +108,5 @@ sed -i "s/-Dchangelist=.*/-Dchangelist=$new_master_qualifier/" .mvn/maven.config
 git diff --exit-code --quiet .mvn/maven.config || git commit -m "Automatic update of version" .mvn/maven.config
 git tag "$new_master_version$new_master_qualifier"
 git push origin master
-
+git push --tags
 
