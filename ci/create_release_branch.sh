@@ -75,19 +75,19 @@ new_master_version="${major}.${minor}.${master_patch}"
 new_master_qualifier="-SNAPSHOT"
 
 # create RC branch
-#git checkout -b "$branch"
+git checkout -b "$branch"
 echo "1. will checkout branch $branch"
 
 
 # Update the Maven version in the maven.config file
-#sed -i "s/-Drevision=.*/-Drevision=$new_rc_version/" .mvn/maven.config
-#sed -i "s/-Dchangelist=.*/-Dchangelist=$new_rc_qualifier/" .mvn/maven.config
+sed -i "s/-Drevision=.*/-Drevision=$new_rc_version/" .mvn/maven.config
+sed -i "s/-Dchangelist=.*/-Dchangelist=$new_rc_qualifier/" .mvn/maven.config
 echo "2. will update .mvn/maven.config on branch to $new_rc_version and $new_rc_qualifier"
 
 
 #drop the snapshot for now
-#git diff --exit-code --quiet .mvn/maven.config || git commit -m "Automatic update of version" .mvn/maven.config
-#git tag "$new_rc_version$new_rc_qualifier"
+git diff --exit-code --quiet .mvn/maven.config || git commit -m "Automatic update of version" .mvn/maven.config
+git tag "$new_rc_version$new_rc_qualifier" "$branch"
 echo "3. will commit the .mvn/maven.config changes and  create a tag $new_rc_version$new_rc_qualifier"  
 
 
@@ -97,34 +97,34 @@ echo "3. will commit the .mvn/maven.config changes and  create a tag $new_rc_ver
 echo "4. Build goes here"
 
 # Update the Maven version in the maven.config file for future RC builds
-#sed -i "s/-Drevision=.*/-Drevision=$future_rc_version/" .mvn/maven.config
-#sed -i "s/-Dchangelist=.*/-Dchangelist=$future_rc_qualifier/" .mvn/maven.config
+sed -i "s/-Drevision=.*/-Drevision=$future_rc_version/" .mvn/maven.config
+sed -i "s/-Dchangelist=.*/-Dchangelist=$future_rc_qualifier/" .mvn/maven.config
 echo "5. will update .mvn/maven.config on branch to $future_rc_version and $future_rc_qualifier"
 
-#git diff --exit-code --quiet .mvn/maven.config || git commit -m "Automatic update of version" .mvn/maven.config
-#git tag "$future_rc_version$future_rc_qualifier"
+git diff --exit-code --quiet .mvn/maven.config || git commit -m "Automatic update of version" .mvn/maven.config
+git tag "$future_rc_version$future_rc_qualifier" "$branch"
 echo "6. will commit the .mvn/maven.config changes and  create a tag $future_rc_version$future_rc_qualifier" 
 
 # push the new tags and branch to remote
-#git push --set-upstream origin "$branch"
-#git push --tags
+git push --set-upstream origin "$branch"
+git push --tags
 echo "7. will push the branch $branch"
 
 # back to master branch to continue the job.
-#git checkout master
+git checkout master
 echo "8. will move to master"
 
 # Update the Maven version in the maven.config file
-#sed -i "s/-Drevision=.*/-Drevision=$new_master_version/" .mvn/maven.config
-#sed -i "s/-Dchangelist=.*/-Dchangelist=$new_master_qualifier/" .mvn/maven.config
-echo "9. will update .mvn/maven.config on master to $new_master_version and $new_master_version"
+sed -i "s/-Drevision=.*/-Drevision=$new_master_version/" .mvn/maven.config
+sed -i "s/-Dchangelist=.*/-Dchangelist=$new_master_qualifier/" .mvn/maven.config
+echo "9. will update .mvn/maven.config on master to $new_master_version and $new_master_qualifier"
 
 # Do the commit in master branch
-#git diff --exit-code --quiet .mvn/maven.config || git commit -m "Automatic update of version" .mvn/maven.config
-#git tag "$new_master_version$new_master_qualifier"
+git diff --exit-code --quiet .mvn/maven.config || git commit -m "Automatic update of version" .mvn/maven.config
+git tag "$new_master_version$new_master_qualifier" master
 echo "10. will commit the .mvn/maven.config changes and  create a tag $new_master_version$new_master_qualifier" 
 
 #git push origin master
-#git push --tags
+git push --tags
 echo "11. will push changes to master"
 
