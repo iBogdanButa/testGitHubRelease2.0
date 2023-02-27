@@ -107,9 +107,7 @@ echo "6. will commit the .mvn/maven.config changes and  create a tag $future_rc_
 
 # push the new tags and branch to remote
 git push --set-upstream origin "$branch"
-git push "$branch" "$new_rc_version$new_rc_qualifier"
-git push "$branch" "$future_rc_version$future_rc_qualifier"
-#git push --tags #not recommended
+git push --tags #not recommended
 echo "7. will push the branch $branch"
 
 # back to master branch to continue the job.
@@ -127,7 +125,6 @@ git tag "$new_master_version$new_master_qualifier" master
 echo "10. will commit the .mvn/maven.config changes and  create a tag $new_master_version$new_master_qualifier" 
 
 #git push origin master
-git push master "$new_master_version$new_master_qualifier"
-#git push --tags #not recommended
+git push --tags #not recommended
 echo "11. will push changes to master"
 
