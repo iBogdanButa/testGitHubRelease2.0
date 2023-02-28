@@ -14,7 +14,7 @@ fi
 # Check if the previous tag follows the format X.Y.Z(-HFN)-RCN-SNAPSHOT
 # get the latest tag
 git fetch --tags
-tag=$(git tag --merged master --sort=-v:refname | grep -E '^[0-9]*+\.[0-9]*+\.[0-9]*+-SNAPSHOT$' | head -n1)
+tag=$(git describe --tags --abbrev=0)
 
 echo "Latest tag is $tag"
 
