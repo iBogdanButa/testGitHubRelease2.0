@@ -126,5 +126,6 @@ echo "10. will commit the .mvn/maven.config changes and  create a tag $new_maste
 
 #git push origin master
 git push --tags #not recommended
+git push
 echo "11. will push changes to master"
 
