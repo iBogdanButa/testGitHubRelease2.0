@@ -100,7 +100,7 @@ echo "3. will commit the .mvn/maven.config changes and  create a tag $new_rc_ver
 echo "4. Build goes here"
 
 if [[ "$release_type" == "final" ]] then
-	echo "4.1 This a final release build, the result should go on some serevr here" 
+	echo "4.1 This a final release build, the result should go on some SERVER here" 
 fi
 
 # Update the Maven version in the maven.config file for future RC builds
