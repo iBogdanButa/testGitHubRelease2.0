@@ -11,6 +11,18 @@ if [[ $branch_name =~ ^master$ ]]; then
   exit 1
 fi
 
+# Get the release type of this new branch
+# Check if the first argument exists
+if [ -z "$1" ]; then
+    release_type="rc"
+else
+	release_type="$1"
+	if [[ "$release_type" != "final" ]]; then
+		echo "Error: Release type argument can be empty or 'final'"
+		exit 1
+	fi
+fi
+
 # Check if the previous tag follows the format X.Y.Z(-HFN)-RCN-SNAPSHOT
 # get the latest tag
 git fetch --tags
@@ -38,17 +50,37 @@ fi
 # Setup RC tag for this build
 new_rc_version="${major}.${minor}.${patch}"
 if [ "$isHF" = false ]; then
-	new_rc_qualifier="-RC$rc"
+	if [[ "$release_type" == "final" ]] then
+		new_rc_qualifier=""
+	else
+		new_rc_qualifier="-RC$rc"
+	fi
 else
-	new_rc_qualifier="-HF$hf-RC$rc"
+	if [[ "$release_type" == "final" ]] then
+		new_rc_qualifier="-HF$hf"
+	else
+		new_rc_qualifier="-HF$hf-RC$rc"
+	fi
 fi
 
 # Setup RC tag name for future development builds on this release branch
 future_rc_version="${major}.${minor}.${patch}"
-((rc++))
-if [ "$isHF" = false ]; then
-	future_rc_qualifier="-RC$rc-SNAPSHOT"
+if [[ "$release_type" == "final" ]] then
+	rc="1"
 else
+	((rc++))
+fi	
+
+if [ "$isHF" = false ]; then
+	if [[ "$release_type" == "final" ]] then
+		future_rc_qualifier="-HF1-RC$rc-SNAPSHOT"
+	else 
+		future_rc_qualifier="-RC$rc-SNAPSHOT"
+	fi	
+else
+	if [[ "$release_type" == "final" ]] then
+		((hf++))
+	fi
 	future_rc_qualifier="-HF$hf-RC$rc-SNAPSHOT"
 fi
 echo "1. will work on branch $branch_name"
@@ -66,6 +98,10 @@ echo "3. will commit the .mvn/maven.config changes and  create a tag $new_rc_ver
 #
 #
 echo "4. Build goes here"
+
+if [[ "$release_type" == "final" ]] then
+	echo "4.1 This a final release build, the result should go on some serevr here" 
+fi
 
 # Update the Maven version in the maven.config file for future RC builds
 sed -i "s/-Drevision=.*/-Drevision=$future_rc_version/" .mvn/maven.config
