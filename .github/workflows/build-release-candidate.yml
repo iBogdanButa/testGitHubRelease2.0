@@ -66,10 +66,10 @@ jobs:
       run: |
         final=""
         skipBuild=false        
-        if [[ "${{ github.event.inputs.release_type }}" == "Build Final Stable Release" ]]; then
+        if [[ "${{ github.event.inputs.build_type }}" == "Build Final Stable Release" ]]; then
             echo "Script was called with option: Build Final Stable Release"
             final="final"
-        elif [[ "${{ github.event.inputs.release_type }}" == "Skip Build" ]]; then
+        elif [[ "${{ github.event.inputs.build_type }}" == "Skip Build" ]]; then
             echo "Script was called with option: Skip Build"
             skipBuild=true
         else
