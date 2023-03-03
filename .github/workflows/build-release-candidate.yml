@@ -6,7 +6,7 @@ on:
       - master
     inputs:             
       release_branch:
-        description: 'Build version(e.g. 3.0.0-RC1 for a new RC, 3.0.0-HF1-RC1 for a new HF RC, 3.0.0 or 3.0.0-HF1 for a final build)'
+        description: 'Build version(e.g. 3.0.0-RC1 for RC1, 3.0.0-HF1-RC2 for HF1 RC2, 3.0.0 or 3.0.0-HF3 for a final build)'
         required: true
         default: '3.0.0-RC1'
       build_type:
