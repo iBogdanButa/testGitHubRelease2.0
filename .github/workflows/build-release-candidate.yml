@@ -6,9 +6,9 @@ on:
       - master
     inputs:             
       release_branch:
-        description: 'Branch version'
+        description: 'Build version(e.g. 3.0.0-RC1 or 3.0.0-RC1-HF1)'
         required: true
-        default: '3.0.0'      
+        default: '3.0.0-RC1'      
       build_type:
         type: choice
         description: 'Build action'
@@ -16,7 +16,6 @@ on:
         options:
         - Build Release Candidate
         - Build Final Stable Release
-        - Skip Build
         default: 'Build Release Candidate'
 jobs:
   release-candidate:
@@ -37,7 +36,7 @@ jobs:
       run: |
         git config --global user.email "bogdan.buta@atos.net"
         git config --global user.name "Bogdan Buta"
-    - name: GIT check for branch
+    - name: GIT check for branch and setup environment
       run: |
         BRANCH="VERSION-${{ github.event.inputs.release_branch }}"
         git ls-remote --exit-code --heads origin $BRANCH >/dev/null 2>&1
@@ -60,34 +59,27 @@ jobs:
             exit 1
         fi        
         echo "BRANCH=$BRANCH" >> $GITHUB_ENV
-    - name: Prepare build environment variables
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        final=""
-        skipBuild=false        
+        
+        final=""     
         if [[ "${{ github.event.inputs.build_type }}" == "Build Final Stable Release" ]]; then
             echo "Script was called with option: Build Final Stable Release"
             final="final"
-        elif [[ "${{ github.event.inputs.build_type }}" == "Skip Build" ]]; then
-            echo "Script was called with option: Skip Build"
-            skipBuild=true
         else
             echo "Script was called with option: Build Release Candidate"
         fi
         
         echo "FINAL=$final" >> $GITHUB_ENV
-        echo "SKIP_BUILD=$skipBuild" >> $GITHUB_ENV
     - name: Pre-build version preparation
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY        
         echo "Will work on branch : $BRANCH" 
-        echo "Will skip the build : $SKIP_BUILD"
         echo "Will run final build: $FINAL"
              
         #source ci/build_release_candidate.sh
+        #build_version=$(get_next_release_version $BRANCH)        
+        
         #BRANCH="VERSION-${{ github.event.inputs.release_branch }}"
         #if [[ ${{ github.event.inputs.final_release }} == "true" ]]; then
         #    preBuildPreparation $BRANCH final
