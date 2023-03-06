@@ -1,4 +1,4 @@
-name: 900 Create Release Candidate or Final Build
+name: 901 Create HF Release Candidate or Final Build
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ on:
         default: '3.0.0'
       final_release:
         type: boolean
-        description: 'Build final stable release'
+        description: 'Build final stable release for HF'
 jobs:
   release-candidate:
     runs-on: ubuntu-latest
@@ -37,18 +37,18 @@ jobs:
         git ls-remote --exit-code --heads origin $BRANCH >/dev/null 2>&1
         EXIT_CODE=$?
         if [[ $EXIT_CODE == '0' ]]; then
-            echo "Git branch '$BRANCH' exists in the remote repository"
+            echo "Git branch '$BRANCH' exists in the remote repository"            
             git fetch
             git checkout $BRANCH
             git fetch --tags
             tag=$(git describe --tags --abbrev=0)
-            if [[ $tag =~ ([0-9]+)\.([0-9]+)\.([0-9]+)-RC([0-9]+)-SNAPSHOT ]]; then
-                echo "Release candidate can be released based on version $tag"
+            if [[ $tag =~ ([0-9]+)\.([0-9]+)\.([0-9]+)-HF([0-9]+)-RC([0-9]+)-SNAPSHOT ]]; then
+                echo "HF release candidate can be released based on version $tag"
             else
-                echo "Currently working on version $tag. Make sure you run the correct workflow."
+                echo "Currently working on version $tag. Make a final release first."
                 exit 1
             fi
-            git checkout master            
+            git checkout master
         elif [[ $EXIT_CODE == '2' ]]; then
             echo "Git branch '$BRANCH' does not exist in the remote repository"
             exit 1
@@ -88,7 +88,5 @@ jobs:
         source ci/build_release_candidate.sh
         BRANCH="VERSION-${{ github.event.inputs.release_branch }}"
         postBuildActions $BRANCH
-    
-
         
         
