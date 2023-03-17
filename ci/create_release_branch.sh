@@ -134,12 +134,12 @@ git commit -m "[WF] Automatic update of version to $future_rc_version$future_rc_
 git tag "$new_master_version$new_master_qualifier" master
 LOG "Actions done on master: new tag $new_master_version$new_master_qualifier." 
 
-git checkout "$branch" >/dev/null 2>&1
-git push --set-upstream origin "$branch" >/dev/null 2>&1
-git push --tags >/dev/null 2>&1
+git checkout "$branch" 
+git push --set-upstream origin 
+git push --tags
 LOG "Changes on branch $branch saved"
 
-git checkout master >/dev/null 2>&1
-git push origin master >/dev/null 2>&1
-git push --tags >/dev/null 2>&1
+git checkout master 
+git push origin master
+git push --tags 
 LOG "Changes on master saved"
