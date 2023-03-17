@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.unify.githubtestapp</groupId>
+    <artifactId>gemma</artifactId>
+    <packaging>pom</packaging>
+
+    <name>gemma</name>
+    <version>${revision}${changelist}</version>
+
+    <properties>
+        <!--
+        Sane defaults when no revision or changelist properties are passed
+        from the commandline or .mvn/maven.config
+        -->
+        <revision>0.0.0.0</revision>
+        <changelist>-SNAPSHOT</changelist>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <jdk.debug>true</jdk.debug>
+        <jdk.optimize>false</jdk.optimize>
+        <jdk.source>1.8</jdk.source>
+        <jdk.target>1.8</jdk.target>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.parameters>false</maven.compiler.parameters>
+    </properties>
+
+    <modules>
+        <module>gh-test-app</module>
+    </modules>
+</project>
