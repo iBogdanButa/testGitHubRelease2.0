@@ -135,7 +135,7 @@ git tag "$new_master_version$new_master_qualifier" master
 LOG "Actions done on master: new tag $new_master_version$new_master_qualifier." 
 
 git checkout "$branch" 
-git push --set-upstream origin 
+git push --set-upstream origin "$branch"
 git push --tags
 LOG "Changes on branch $branch saved"
 
