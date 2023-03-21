@@ -1,0 +1,11 @@
+name: 1 Create Release Branch
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release-candidate:
+    runs-on: ubuntu-latest
+    steps:    
+    - name: Echo something
+      run: echo "Something"
