@@ -1,0 +1,16 @@
+name: Simple Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release-candidate:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        ref: 'VERSION-2.0.1'
+    - name: Echo something
+      run: echo "Something but on VERSION-2.0.1"
