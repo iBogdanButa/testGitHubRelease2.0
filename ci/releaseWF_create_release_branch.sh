@@ -95,7 +95,7 @@ future_rc_version="${major}.${minor}.${patch}"
 future_rc_qualifier="-RC1-SNAPSHOT"
 
 # create RC branch
-git checkout -b "$branch"
+git checkout -b "$branch" "$MASTER_BRANCH"
 
 # update Maven config on release branch
 updateMavenConfig "$future_rc_version" "$future_rc_qualifier" && 
