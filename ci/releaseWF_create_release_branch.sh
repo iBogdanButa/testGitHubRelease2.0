@@ -37,7 +37,7 @@ function readyForNewReleaseBranch() {
 }
 
 # This script can run only on master branch
-runningOnMaster && { LOG "$0 called from master. Script can continue."; } || { LOG -e "You should create a RC branch from the master branch."; exit 1; }
+runningOnMaster && { LOG "$0 called from $MASTER_BRANCH. Script can continue."; } || { LOG -e "You should create a RC branch from the $MASTER_BRANCH branch."; exit 1; }
 
 # Get the release type of this new branch
 # Check if the first argument exists
