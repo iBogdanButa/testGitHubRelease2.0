@@ -2,10 +2,43 @@ name: Z-1 Create Release Branch
 
 on:
   workflow_dispatch:
-
+    branches:
+      - release-master
+    inputs:
+      release_type:
+        type: choice
+        description: 'Release type'
+        required: true
+        options:
+        - major
+        - minor
+        - patch
+        default: 'patch'
 jobs:
   release-candidate:
     runs-on: ubuntu-latest
-    steps:    
-    - name: Wrong branch
-      run: echo "WF is under development. Please run on GEMMA-release-master"
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        ref: release-master
+    - name: Install Git
+      run: sudo apt-get update && sudo apt-get install -y git
+    - name: Install Maven
+      uses: actions/setup-java@v1
+      with:
+        java-version: '8'
+        distribution: 'adopt'
+    - name: GIT comitter configuration
+      run: |
+        git config --global user.email "bogdan.buta@atos.net"
+        git config --global user.name "Bogdan Buta"
+    - name: Run ci script
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+        echo "Will create a ${{ github.event.inputs.release_type }} release branch"
+        ON_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+        echo "Running on branch $ON_BRANCH"
