@@ -131,7 +131,7 @@ set_client_version "${chart_version}" "no-commit" && LOG "Client set to use vers
 git add .mvn/maven.config "${HELM_CHARTS_LOCATION}/project/Chart.yaml" "${HELM_CHARTS_LOCATION}/project/values.yaml" "${CLIENT_LOCATION}/package.json"
 git commit -m "[WF] Automatic update of version to $future_rc_version$future_rc_qualifier"
 
-git tag "$new_master_version$new_master_qualifier" master
+git tag "$new_master_version$new_master_qualifier" $MASTER_BRANCH
 LOG "Actions done on master: new tag $new_master_version$new_master_qualifier." 
 
 git checkout "$branch" 
