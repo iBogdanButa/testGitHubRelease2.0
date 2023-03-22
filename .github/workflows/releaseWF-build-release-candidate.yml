@@ -1,0 +1,11 @@
+name: Z-2 Build Next Release Candidate
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release-candidate:
+    runs-on: ubuntu-latest
+    steps:    
+    - name: Wrong branch
+      run: echo "WF is under development. Please run on GEMMA-release-master"
