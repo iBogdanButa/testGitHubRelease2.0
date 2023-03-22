@@ -42,4 +42,4 @@ jobs:
         echo "Will create a ${{ github.event.inputs.release_type }} release branch"
         ON_BRANCH=$(git rev-parse --abbrev-ref HEAD)
         echo "Running on branch $ON_BRANCH"
-        bash ci/releaseWF-create_release_branch.sh ${{ github.event.inputs.release_type }}
+        bash ci/releaseWF_create_release_branch.sh ${{ github.event.inputs.release_type }}
